@@ -31,6 +31,9 @@ RUN docker-php-ext-configure intl
 RUN docker-php-ext-install pdo pdo_mysql gd opcache intl zip calendar
 RUN pecl install apcu-5.1.5 && docker-php-ext-enable apcu
 
+RUN a2enmod rewrite
+# RUN service apache2 restart
+
 # On créé un utilisateur avec le même gid/uid que votre local
 # cela va permettre que les fichiers qui sont créés dans le contenaire auront vos droits
 # RUN addgroup --system gponty --gid 1000 && adduser --system gponty --uid 1000 --ingroup gponty
