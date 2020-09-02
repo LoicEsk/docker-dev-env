@@ -1,14 +1,15 @@
 # Docker dev env
 
-## Utilisation
+## Utilisation du serveur Docker
 
-### Lancement
-``` docker-compose up -d```
-- -d pour detacher la console
+- Lancer le serveur : ```docker-compose up``` 
 
-### Build / rebuild
-``` docker-compose build```
+- Lancer le serveur détaché de la console : ```docker-compose up -d```
+- Stopper le serveur en mode détaché : ```docker-compose stop```
 
-### Stop
-```docker-compose down```
+- Build ou rebuild des container : ```docker-compose build```
+
+- Executer des commandes php ou composer sur le serveur Docker : 
+    1. Se connecter : ```docker-compose exec php bash``` (le serveur doit être up)
+    2. Lancer la commande voulue
 
