@@ -1,5 +1,11 @@
 # Docker dev env
 
+## Les cofigrations disponibles
+
+- php 7.2 / apache / mysql
+- php 7.4 / nginx / mysql
+
+
 ## Utilisation du serveur Docker
 
 - Lancer le serveur : ```docker-compose up``` 
