@@ -1,10 +1,18 @@
-FROM php:7.4-fpm
+# Dockerfile
+FROM php:7.4-apache
 
-ADD https://raw.githubusercontent.com/mlocati/docker-php-extension-installer/master/install-php-extensions /usr/local/bin/
+ENV COMPOSER_ALLOW_SUPERUSER=1
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN composer --version
 
-RUN chmod uga+x /usr/local/bin/install-php-extensions && sync && \
-    install-php-extensions amqp apcu bcmath exif gd grpc imap intl ldap mcrypt opcache pdo pdo_mysql redis sockets uuid xdebug yaml zip
+RUN apt-get update -qq && \
+    apt-get install -qy \
+    git \
+    gnupg \
+    unzip \
+    zip 
+RUN docker-php-ext-install -j$(nproc) opcache pdo_mysql
 
-# on télécharge et deplace le composer
-RUN curl -sSk https://getcomposer.org/installer | php -- --disable-tls && \
-   mv composer.phar /usr/local/bin/composer
+COPY conf/apache/000-default.conf /etc/apache2/sites-available/000-default.conf
+
+WORKDIR /var/www

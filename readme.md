@@ -4,6 +4,7 @@
 
 - php 7.2 / apache / mysql
 - php 7.4 / nginx / mysql
+- php 7.4 / apache / mysql
 
 
 ## Utilisation du serveur Docker
