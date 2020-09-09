@@ -1,6 +1,10 @@
 # Docker dev env
 
-## Les cofigrations disponibles
+Configurations Docker pour développement web. Les config sont faites pour êtes copiées à la racine d'un projet dont le vhost est sur public/. Elles fournient un serveur sur localhost:8080. Voir utilisation ci-dessous.
+
+Selectionner la branche qui correspond à la configuration souhaitée.
+
+## Les configrations disponibles
 
 - php 7.2 / apache / mysql
 - php 7.4 / nginx / mysql
