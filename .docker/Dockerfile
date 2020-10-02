@@ -18,4 +18,9 @@ RUN a2enmod rewrite
 
 COPY conf/apache/000-default.conf /etc/apache2/sites-available/000-default.conf
 
+# Droits d'écriture pour www-data
+RUN chmod -R 777 /var/www/
+RUN usermod -a -G www-data www-data
+RUN usermod -a -G www-data root
+
 WORKDIR /var/www
