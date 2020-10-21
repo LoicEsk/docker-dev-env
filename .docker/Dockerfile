@@ -23,4 +23,12 @@ RUN chmod -R 777 /var/www/
 RUN usermod -a -G www-data www-data
 RUN usermod -a -G www-data root
 
+# conf pour les mails
+RUN curl -Lsf 'https://storage.googleapis.com/golang/go1.8.3.linux-amd64.tar.gz' | tar -C '/usr/local' -xvzf -
+ENV PATH /usr/local/go/bin:$PATH
+RUN GOPATH=$HOME/go \
+    PATH=$PATH:$GOROOT/bin:$GOPATH/bin \
+    go get github.com/mailhog/mhsendmail
+RUN ln  ~/go/bin/mhsendmail /usr/bin/mhsendmail
+
 WORKDIR /var/www
