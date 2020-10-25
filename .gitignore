@@ -1,5 +1,5 @@
 # Mysql
-/data
+.docker/data
 
 # composer
 /vendor
