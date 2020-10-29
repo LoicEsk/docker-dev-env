@@ -11,7 +11,7 @@ RUN apt-get update -qq && \
     gnupg \
     unzip \
     zip 
-RUN docker-php-ext-install -j$(nproc) opcache pdo_mysql
+RUN docker-php-ext-install -j$(nproc) opcache pdo_mysql mysqli
 
 # activer mod_rewrite
 RUN a2enmod rewrite
