@@ -6,3 +6,6 @@
 
 # OS
 .DS_Store
+
+# Wordfence
+web/app/wflogs/

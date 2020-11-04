@@ -1,15 +1,22 @@
 version: '3'
 services:
-    php:
+    wp:
         build: .docker
-        volumes:
-            - ./.docker/conf/php/php.ini:/usr/local/etc/php/conf.d/php.ini
-            - ./.docker/conf/php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
-            - .:/var/www
         ports:
             - "8080:80"
+        environment:
+            - WORDPRESS_DB_HOST=db
+            - WORDPRESS_DB_USER=root
+            - WORDPRESS_DB_PASSWORD=
+            - WORDPRESS_DB_NAME=etematik_llp
+            - WORDPRESS_TABLE_PREFIX=llp_
+            - WORDPRESS_DEBUG=1
         depends_on:
             - db
+        volumes:
+            - ./:/var/www/html/wp-content/themes/la-loi-pinel.com
+            - .docker/volumes/plugins:/var/www/html/wp-content/plugins
+            - .docker/volumes/uploads:/var/www/html/wp-content/uploads
     db:
         image: mysql:5
         ports:
@@ -18,10 +25,4 @@ services:
             MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
             MYSQL_USER: 'root'
         volumes:
-            - .docker/data/mysqlSf:/var/lib/mysql
-
-    mailhog:
-        image: mailhog/mailhog:v1.0.0
-        ports:
-            - "1025:1025"
-            - "8025:8025"
+            - .docker/volumes/data/mysqlSf:/var/lib/mysql
