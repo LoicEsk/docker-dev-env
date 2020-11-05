@@ -20,7 +20,7 @@
 
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define( 'DB_NAME', 'etematik_llp');
+define( 'DB_NAME', 'db_name');
 
 /** MySQL database username */
 define( 'DB_USER', 'root');
@@ -46,14 +46,14 @@ define( 'DB_COLLATE', '');
  *
  * @since 2.6.0
  */
-define( 'AUTH_KEY',         '3b8a2d9d0285d183ec814692c13fcbbc24c79ff8');
-define( 'SECURE_AUTH_KEY',  'ebf7b9134e2f73ba319e96e972fdeb9be652b894');
-define( 'LOGGED_IN_KEY',    '1d60024b0bed935ba1da6522c759ae852fecdd1a');
-define( 'NONCE_KEY',        '646527f6444ca87652c65d48700ed05f4d04481a');
-define( 'AUTH_SALT',        '0676cf1b4400bc6a2e2d36b59738c68066c59774');
-define( 'SECURE_AUTH_SALT', 'a0111020e000c66e63ec815bf47584f00d9c7cc9');
+define( 'AUTH_KEY',         '3b8a2d9d0285d183ec814692c13bbc24c79ff8');
+define( 'SECURE_AUTH_KEY',  'ebf7b9134e2f73ba319e96e972eb9be652b894');
+define( 'LOGGED_IN_KEY',    '1d60024b0bed5ba1da6522c759ae852fecdd1a');
+define( 'NONCE_KEY',        '646527f644487652c65d48700ed05f4d04481a');
+define( 'AUTH_SALT',        '0676cf1b4400bc6a2e36b59738c68066c59774');
+define( 'SECURE_AUTH_SALT', 'a0111020e000c663ec815bf47584f00d9c7cc9');
 define( 'LOGGED_IN_SALT',   'c507a7b56d435c76d83612e9802a62327e020ff2');
-define( 'NONCE_SALT',       '3109531254dc17d4a5d3001bbc45a02881089633');
+define( 'NONCE_SALT',       '3109531254d7d4a5d3001bbc45a02881089633');
 
 /**#@-*/
 
@@ -94,7 +94,6 @@ define('ENV_CUSTOM', 'development');
 define('WP_MEMORY_LIMIT', '256M');
 define('WP_MAX_MEMORY_LIMIT', '256M');
 
-define( 'SLACK_WEBHOOK', 'https://hooks.slack.com/services/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'); // pour l'envoi de notifs
 
 
 // If we're behind a proxy server and using HTTPS, we need to alert WordPress of that fact
