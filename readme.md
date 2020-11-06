@@ -9,7 +9,8 @@
 
 ## Utilisation du serveur Docker
 
-- Lancer le serveur : ```docker-compose up``` 
+1. Copier ses clés RSA dans le scope Docker ``cp -r ~/.ssh/id_rsa .docker/.ssh``
+2. Lancer le serveur : ```docker-compose up``` 
 
 - Lancer le serveur détaché de la console : ```docker-compose up -d```
 - Stopper le serveur en mode détaché : ```docker-compose stop```
