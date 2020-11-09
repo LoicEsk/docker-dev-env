@@ -31,4 +31,8 @@ RUN GOPATH=$HOME/go \
     go get github.com/mailhog/mhsendmail
 RUN ln  ~/go/bin/mhsendmail /usr/bin/mhsendmail
 
+# Copie des clés RSA pour autoriser composer à se connecter à Github
+COPY .ssh/id_rsa /root/.ssh/id_rsa
+RUN chmod 400 /root/.ssh/id_rsa
+
 WORKDIR /var/www
