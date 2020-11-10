@@ -16,6 +16,10 @@ RUN docker-php-ext-install -j$(nproc) opcache pdo_mysql mysqli
 # activer mod_rewrite
 RUN a2enmod rewrite
 
+# Mise en forme des erreurs et var_dump()
+RUN pecl install xdebug
+RUN docker-php-ext-enable xdebug 
+
 COPY conf/apache/000-default.conf /etc/apache2/sites-available/000-default.conf
 
 # Droits d'écriture pour www-data
