@@ -46,14 +46,14 @@ define( 'DB_COLLATE', '');
  *
  * @since 2.6.0
  */
-define( 'AUTH_KEY',         '3b8a2d9d0285d183ec814692c13bbc24c79ff8');
-define( 'SECURE_AUTH_KEY',  'ebf7b9134e2f73ba319e96e972eb9be652b894');
-define( 'LOGGED_IN_KEY',    '1d60024b0bed5ba1da6522c759ae852fecdd1a');
-define( 'NONCE_KEY',        '646527f644487652c65d48700ed05f4d04481a');
-define( 'AUTH_SALT',        '0676cf1b4400bc6a2e36b59738c68066c59774');
-define( 'SECURE_AUTH_SALT', 'a0111020e000c663ec815bf47584f00d9c7cc9');
-define( 'LOGGED_IN_SALT',   'c507a7b56d435c76d83612e9802a62327e020ff2');
-define( 'NONCE_SALT',       '3109531254d7d4a5d3001bbc45a02881089633');
+define( 'AUTH_KEY',         'generateThisPlease');
+define( 'SECURE_AUTH_KEY',  'generateThisPlease');
+define( 'LOGGED_IN_KEY',    'generateThisPlease');
+define( 'NONCE_KEY',        'generateThisPlease');
+define( 'AUTH_SALT',        'generateThisPlease');
+define( 'SECURE_AUTH_SALT', 'generateThisPlease');
+define( 'LOGGED_IN_SALT',   'generateThisPlease');
+define( 'NONCE_SALT',       'generateThisPlease');
 
 /**#@-*/
 
@@ -63,7 +63,7 @@ define( 'NONCE_SALT',       '3109531254d7d4a5d3001bbc45a02881089633');
  * You can have multiple installations in one database if you give each
  * a unique prefix. Only numbers, letters, and underscores please!
  */
-$table_prefix = 'llp_';
+$table_prefix = 'wp_';
 
 /**
  * For developers: WordPress debugging mode.
@@ -78,21 +78,9 @@ $table_prefix = 'llp_';
  * @link https://wordpress.org/support/article/debugging-in-wordpress/
  */
 define( 'WP_DEBUG', true);
-define('WP_DEBUG_LOG', true);
-define('DISALLOW_FILE_EDIT', true);
 
 define('WP_HOME', 'http://localhost:8080');
 define('WP_SITEURL', 'http://localhost:8080');
-
-
-// Contact form 7 spaces
-define('WPCF7_AUTOP', false);
-
-define('ENV_CUSTOM', 'development');
-
-// define('DISABLE_WP_CRON', true);
-define('WP_MEMORY_LIMIT', '256M');
-define('WP_MAX_MEMORY_LIMIT', '256M');
 
 
 
