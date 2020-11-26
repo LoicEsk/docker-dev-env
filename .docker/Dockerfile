@@ -20,6 +20,11 @@ RUN a2enmod rewrite
 RUN pecl install xdebug
 RUN docker-php-ext-enable xdebug 
 
+# Install imagick pour le redimensionement d'images
+RUN apt-get install -y libmagickwand-dev --no-install-recommends && rm -rf /var/lib/apt/lists/*
+RUN printf "\n" | pecl install imagick
+RUN docker-php-ext-enable imagick
+
 COPY conf/apache/000-default.conf /etc/apache2/sites-available/000-default.conf
 
 # Droits d'écriture pour www-data
