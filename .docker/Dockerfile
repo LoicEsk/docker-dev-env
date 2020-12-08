@@ -28,6 +28,7 @@ RUN docker-php-ext-enable imagick
 COPY conf/apache/000-default.conf /etc/apache2/sites-available/000-default.conf
 
 # Droits d'écriture pour www-data
+RUN usermod -u 1000 www-data
 RUN chmod -R 777 /var/www/
 RUN usermod -a -G www-data www-data
 RUN usermod -a -G www-data root
@@ -43,5 +44,9 @@ RUN ln  ~/go/bin/mhsendmail /usr/bin/mhsendmail
 # Copie des clés RSA pour autoriser composer à se connecter à Github
 COPY .ssh/id_rsa /root/.ssh/id_rsa
 RUN chmod 400 /root/.ssh/id_rsa
+
+# Les alias
+RUN echo 'alias sf="php app/console"' >> ~/.bashrc
+RUN echo 'alias ll="ls -alF"' >> ~/.bashrc
 
 WORKDIR /var/www

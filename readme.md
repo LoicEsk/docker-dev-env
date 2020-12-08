@@ -1,10 +1,8 @@
 # Docker dev env
 
-## Les cofigrations disponibles
+## Les configrations disponibles
 
-- php 7.2 / apache / mysql
-- php 7.4 / nginx / mysql
-- php 7.4 / apache / mysql
+Voir le readme de la branche master
 
 
 ## Utilisation du serveur Docker
