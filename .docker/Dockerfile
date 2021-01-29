@@ -46,7 +46,7 @@ COPY .ssh/id_rsa /root/.ssh/id_rsa
 RUN chmod 400 /root/.ssh/id_rsa
 
 # Les alias
-RUN echo 'alias sf="php app/console"' >> ~/.bashrc
+RUN echo 'alias sf="php bin/console"' >> ~/.bashrc
 RUN echo 'alias ll="ls -alF"' >> ~/.bashrc
 
 WORKDIR /var/www
