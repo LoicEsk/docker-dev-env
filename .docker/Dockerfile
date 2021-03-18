@@ -5,7 +5,7 @@ FROM php:7.4-apache
 RUN usermod -u 1000 www-data
 RUN usermod -a -G www-data www-data
 RUN usermod -a -G www-data root
-RUN chmod -R 777 /var/www/
+# RUN chmod -R 777 /var/www/
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -48,11 +48,11 @@ RUN docker-php-ext-configure gd --with-jpeg \
     && docker-php-ext-install -j "$(nproc)" gd
 
 # Copie des clés RSA pour autoriser composer à se connecter à Github
-COPY .ssh/id_rsa /root/.ssh/id_rsa
-RUN chmod 400 /root/.ssh/id_rsa
+# COPY .ssh/id_rsa /root/.ssh/id_rsa
+# RUN chmod 400 /root/.ssh/id_rsa
 
 # Les alias
-RUN echo 'alias sf="php bin/console"' >> ~/.bashrc
-RUN echo 'alias ll="ls -alF"' >> ~/.bashrc
+COPY .bashrc /var/www/.bashrc
+RUN chown www-data:www-data /var/www/.bashrc
 
-WORKDIR /var/www
+WORKDIR /var/www/app
