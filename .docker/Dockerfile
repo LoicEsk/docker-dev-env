@@ -5,7 +5,7 @@ FROM php:7.4-apache
 RUN usermod -u 1000 www-data
 RUN usermod -a -G www-data www-data
 RUN usermod -a -G www-data root
-# RUN chmod -R 777 /var/www/
+RUN chmod -R 777 /var/www/
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
