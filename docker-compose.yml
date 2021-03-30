@@ -4,20 +4,19 @@ services:
         image: nginx
         volumes:
             - ./.docker/conf/nginx/default.conf:/etc/nginx/conf.d/default.conf
-            - .:/var/www/html
+            - .:/var/www/app
         ports:
-            - 8080:80
-        restart: always
+            - 8000:80
         depends_on:
             - php
             - db
     php:
         build: .docker
-        restart: always
         volumes:
             - ./.docker/conf/php/php.ini:/usr/local/etc/php/conf.d/php.ini
-            - ./.docker/conf/php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
-            - .:/var/www/html
+            - .:/var/www/app
+        user: www-data
+
     db:
         image: mysql:5
         ports:
@@ -25,39 +24,5 @@ services:
         environment:
             MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
             MYSQL_USER: 'root'
-        volumes:
-            - ./data/mysqlSf:/var/lib/mysql
-
-    # pgadmin:
-    #     container_name: pgadmin_container
-    #     image: dpage/pgadmin4
-    #     links:
-    #         - db
-    #     depends_on: 
-    #         - db
-    #     environment:
-    #         PGADMIN_DEFAULT_EMAIL: '${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}'
-    #         PGADMIN_DEFAULT_PASSWORD: '${PGADMIN_DEFAULT_PASSWORD:-adminstsapi}'
-    #     volumes:
-    #         - 'pgadmin:/root/.pgadmin'
-    #     ports:
-    #         - '${PGADMIN_PORT:-5050}:80'
-    #     restart: unless-stopped
-
-    # mailcatcher:
-    #     restart: on-failure:10
-    #     image: dockage/mailcatcher:0.7.1
-    #     ports:
-    #     - "1080:1080"
-    #     - "1025:1025"
-
-    # redis:
-    #     image: redis:5-alpine
-    #     ports: [6379]
-
-    # rabbitmq:
-    #     image: rabbitmq:3.7-management
-    #     ports: [5672,15672]
-
-volumes:
-    pgadmin:
+        # volumes:
+        #     - ./data/mysqlSf:/var/lib/mysql
