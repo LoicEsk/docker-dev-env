@@ -48,8 +48,9 @@ RUN docker-php-ext-configure gd --with-jpeg \
     && docker-php-ext-install -j "$(nproc)" gd
 
 # Copie des clés RSA pour autoriser composer à se connecter à Github
-# COPY .ssh/id_rsa /root/.ssh/id_rsa
-# RUN chmod 400 /root/.ssh/id_rsa
+# COPY .ssh/id_rsa /var/www/.ssh/id_rsa
+# RUN chown -R www-data:www-data /var/www/.ssh
+# RUN chmod 400 /var/www/.ssh/id_rsa
 
 # Les alias
 COPY .bashrc /var/www/.bashrc
