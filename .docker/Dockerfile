@@ -19,6 +19,11 @@ RUN apt-get update -qq && \
     zip 
 RUN docker-php-ext-install -j$(nproc) opcache pdo_mysql mysqli
 
+# intl (pour Sf)
+RUN apt-get install -y libicu-dev \
+    && docker-php-ext-configure intl \
+    && docker-php-ext-install intl
+
 # Install imagick pour le redimensionement d'images
 RUN apt-get install -y libmagickwand-dev --no-install-recommends && rm -rf /var/lib/apt/lists/*
 RUN printf "\n" | pecl install imagick
