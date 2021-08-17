@@ -1,6 +1,16 @@
 # image à utiliser
 FROM php:7.1-apache
 
+# Droits d'écriture pour www-data
+RUN usermod -u 1000 www-data
+RUN usermod -a -G www-data www-data
+RUN usermod -a -G www-data root
+RUN chmod -R 777 /var/www/
+
+ENV COMPOSER_ALLOW_SUPERUSER=1
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN composer --version
+
 # On envoie le nom du serveur à apache, c'est avec ça que l'on appelera nos pages
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
@@ -31,12 +41,20 @@ RUN docker-php-ext-configure intl
 RUN docker-php-ext-install pdo pdo_mysql gd opcache intl zip calendar
 RUN pecl install apcu-5.1.5 && docker-php-ext-enable apcu
 
+# Mise en forme des erreurs et var_dump()
+RUN pecl install xdebug
+RUN docker-php-ext-enable xdebug 
+
+# conf pour les mails (ne fonctionne pas en l'état)
+RUN curl -Lsf 'https://storage.googleapis.com/golang/go1.8.3.linux-amd64.tar.gz' | tar -C '/usr/local' -xvzf -
+ENV PATH /usr/local/go/bin:$PATH
+RUN GOPATH=$HOME/go \
+    PATH=$PATH:$GOROOT/bin:$GOPATH/bin \
+    go get github.com/mailhog/mhsendmail
+RUN ln  ~/go/bin/mhsendmail /usr/bin/mhsendmail
+
+# Activation des modules php
 RUN a2enmod rewrite
-# RUN service apache2 restart
+RUN a2enmod headers
 
-# On créé un utilisateur avec le même gid/uid que votre local
-# cela va permettre que les fichiers qui sont créés dans le contenaire auront vos droits
-# RUN addgroup --system gponty --gid 1000 && adduser --system gponty --uid 1000 --ingroup gponty
-
-# le repertoire qui contient vos sources (attention : dans le contenaire, donc le repertoire à droite du mapping du docker-compose)
-WORKDIR /var/www/
+WORKDIR /var/www/app
