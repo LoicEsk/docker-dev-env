@@ -7,18 +7,22 @@ services:
       environment:
         MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
         MYSQL_USER: 'root'
-      volumes:
-        - ./data/mysqlSf:/var/lib/mysql
-
-    maildev:
-        image: djfarrelly/maildev
-        ports:
-          - "8002:80"
-
+      # volumes:
+      #   - ./data/mysqlSf:/var/lib/mysql
 
     php:
         build: .docker
         ports:
-          - "8080:80"
+          - "8000:80"
         volumes:
-            - ./:/var/www
+            - ./:/var/www/app
+        depends_on:
+            - db
+            - mailhog
+        user: www-data
+
+    mailhog:
+        image: mailhog/mailhog:v1.0.0
+        ports:
+            - "1025:1025"
+            - "8025:8025"
