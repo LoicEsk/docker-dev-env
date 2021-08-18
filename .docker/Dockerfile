@@ -1,5 +1,5 @@
-# image à utiliser
-FROM php:7.1-apache
+# Dockerfile
+FROM php:7.4-apache
 
 # Droits d'écriture pour www-data
 RUN usermod -u 1000 www-data
@@ -11,35 +11,29 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN composer --version
 
-# On envoie le nom du serveur à apache, c'est avec ça que l'on appelera nos pages
-RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+RUN apt-get update -qq && \
+    apt-get install -qy \
+    git \
+    gnupg \
+    unzip \
+    zip 
+RUN docker-php-ext-install -j$(nproc) opcache pdo_mysql mysqli
 
-# Quelques library necessaires
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends locales apt-utils git libicu-dev g++ libpng-dev;
+# intl (pour Sf)
+RUN apt-get install -y libicu-dev \
+    && docker-php-ext-configure intl \
+    && docker-php-ext-install intl
 
-# install nano
-RUN apt-get install nano
+# Install imagick pour le redimensionement d'images
+RUN apt-get install -y libmagickwand-dev --no-install-recommends && rm -rf /var/lib/apt/lists/*
+RUN printf "\n" | pecl install imagick
+RUN docker-php-ext-enable imagick
 
-# les locales, toujours utiles
-RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
-    echo "fr_FR.UTF-8 UTF-8" >> /etc/locale.gen && \
-    locale-gen
+COPY conf/apache/000-default.conf /etc/apache2/sites-available/000-default.conf
 
-# On copie le php.ini du repertoire actuel dans le contenaire
-COPY php.ini /usr/local/etc/php/php.ini
-
-# Création du vhost
-COPY 000-default.conf /etc/apache2/sites-enabled/000-default.conf
-
-# on télécharge et deplace le composer
-RUN curl -sSk https://getcomposer.org/installer | php -- --disable-tls && \
-   mv composer.phar /usr/local/bin/composer
-
-# Quelques extesnions de php utiles
-RUN docker-php-ext-configure intl
-RUN docker-php-ext-install pdo pdo_mysql gd opcache intl zip calendar
-RUN pecl install apcu-5.1.5 && docker-php-ext-enable apcu
+# activer mod_rewrite et mod_header
+RUN a2enmod rewrite
+RUN a2enmod headers
 
 # Mise en forme des erreurs et var_dump()
 RUN pecl install xdebug
@@ -53,8 +47,18 @@ RUN GOPATH=$HOME/go \
     go get github.com/mailhog/mhsendmail
 RUN ln  ~/go/bin/mhsendmail /usr/bin/mhsendmail
 
-# Activation des modules php
-RUN a2enmod rewrite
-RUN a2enmod headers
+# install GD pour le traitement des images
+RUN apt-get install -y zlib1g-dev libpng-dev libfreetype6-dev libjpeg62-turbo-dev
+RUN docker-php-ext-configure gd --with-jpeg \
+    && docker-php-ext-install -j "$(nproc)" gd
+
+# Copie des clés RSA pour autoriser composer à se connecter à Github
+# COPY .ssh/id_rsa /var/www/.ssh/id_rsa
+# RUN chown -R www-data:www-data /var/www/.ssh
+# RUN chmod 400 /var/www/.ssh/id_rsa
+
+# Les alias
+COPY .bashrc /var/www/.bashrc
+RUN chown www-data:www-data /var/www/.bashrc
 
 WORKDIR /var/www/app
