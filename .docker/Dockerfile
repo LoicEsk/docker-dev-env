@@ -16,7 +16,8 @@ RUN apt-get update -qq && \
     git \
     gnupg \
     unzip \
-    zip 
+    zip \
+    openssl
 RUN docker-php-ext-install -j$(nproc) opcache pdo_mysql mysqli
 
 # intl (pour Sf)
@@ -25,11 +26,19 @@ RUN apt-get install -y libicu-dev \
     && docker-php-ext-install intl
 
 # Install imagick pour le redimensionement d'images
-RUN apt-get install -y libmagickwand-dev --no-install-recommends && rm -rf /var/lib/apt/lists/*
+RUN apt-get install -y libmagickwand-dev --no-install-recommends
 RUN printf "\n" | pecl install imagick
 RUN docker-php-ext-enable imagick
 
+# install GD pour le traitement des images
+RUN apt-get install -y zlib1g-dev libpng-dev libfreetype6-dev libjpeg62-turbo-dev
+RUN docker-php-ext-configure gd --with-jpeg \
+    && docker-php-ext-install -j "$(nproc)" gd
+
+# Conf Apache
 COPY conf/apache/000-default.conf /etc/apache2/sites-available/000-default.conf
+# Conf php
+COPY conf/php/php.ini /usr/local/etc/php/conf.d/php.ini
 
 # activer mod_rewrite et mod_header
 RUN a2enmod rewrite
@@ -39,7 +48,12 @@ RUN a2enmod headers
 RUN pecl install xdebug
 RUN docker-php-ext-enable xdebug 
 
-# conf pour les mails (ne fonctionne pas en l'état)
+# Copie des clés RSA pour autoriser composer à se connecter à Github
+# COPY .ssh/id_rsa /var/www/.ssh/id_rsa
+# RUN chown -R www-data:www-data /var/www/.ssh
+# RUN chmod 400 /var/www/.ssh/id_rsa
+
+# conf pour les mails
 RUN curl -Lsf 'https://storage.googleapis.com/golang/go1.8.3.linux-amd64.tar.gz' | tar -C '/usr/local' -xvzf -
 ENV PATH /usr/local/go/bin:$PATH
 RUN GOPATH=$HOME/go \
@@ -47,18 +61,13 @@ RUN GOPATH=$HOME/go \
     go get github.com/mailhog/mhsendmail
 RUN ln  ~/go/bin/mhsendmail /usr/bin/mhsendmail
 
-# install GD pour le traitement des images
-RUN apt-get install -y zlib1g-dev libpng-dev libfreetype6-dev libjpeg62-turbo-dev
-RUN docker-php-ext-configure gd --with-jpeg \
-    && docker-php-ext-install -j "$(nproc)" gd
-
-# Copie des clés RSA pour autoriser composer à se connecter à Github
-# COPY .ssh/id_rsa /var/www/.ssh/id_rsa
-# RUN chown -R www-data:www-data /var/www/.ssh
-# RUN chmod 400 /var/www/.ssh/id_rsa
-
 # Les alias
 COPY .bashrc /var/www/.bashrc
 RUN chown www-data:www-data /var/www/.bashrc
+
+
+# Clean
+RUN apt-get clean
+RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /var/cache/*
 
 WORKDIR /var/www/app

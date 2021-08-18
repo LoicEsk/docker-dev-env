@@ -3,13 +3,12 @@ services:
     php:
         build: .docker
         volumes:
-            - ./.docker/conf/php/php.ini:/usr/local/etc/php/conf.d/php.ini
-            # - ./.docker/conf/php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
             - .:/var/www/app
         ports:
             - "8000:80"
         depends_on:
             - db
+            - mailhog
         user: www-data
     db:
         image: mysql:5
