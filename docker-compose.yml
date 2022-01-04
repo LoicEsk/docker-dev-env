@@ -3,19 +3,20 @@ services:
     wp:
         build: .docker
         ports:
-            - "8080:80"
+            - "8000:80"
         environment:
             - WORDPRESS_DB_HOST=db
             - WORDPRESS_DB_USER=root
             - WORDPRESS_DB_PASSWORD=
-            - WORDPRESS_DB_NAME=etematik_llp
-            - WORDPRESS_TABLE_PREFIX=llp_
+            - WORDPRESS_DB_NAME=wordpress
+            - WORDPRESS_TABLE_PREFIX=esk_
             - WORDPRESS_DEBUG=1
         depends_on:
             - db
         volumes:
-            - ./:/var/www/html/wp-content/themes/la-loi-pinel.com
+            - ./:/var/www/html/wp-content/themes/theme_name
             - .docker/volumes/plugins:/var/www/html/wp-content/plugins
+            - .docker/volumes/mu-plugins:/var/www/html/wp-content/mu-plugins
             - .docker/volumes/uploads:/var/www/html/wp-content/uploads
     db:
         image: mysql:5
@@ -26,3 +27,9 @@ services:
             MYSQL_USER: 'root'
         volumes:
             - .docker/volumes/data/mysqlSf:/var/lib/mysql
+    
+    mailhog:
+        image: mailhog/mailhog
+        ports:
+            - "1025:1025"
+            - "8025:8025"

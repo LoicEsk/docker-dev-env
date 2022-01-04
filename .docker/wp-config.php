@@ -20,22 +20,22 @@
 
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define( 'DB_NAME', 'db_name');
+// define( 'DB_NAME', 'wordpress');
 
 /** MySQL database username */
-define( 'DB_USER', 'root');
+// define( 'DB_USER', 'root');
 
 /** MySQL database password */
-define( 'DB_PASSWORD', '');
+// define( 'DB_PASSWORD', '');
 
 /** MySQL hostname */
-define( 'DB_HOST', 'db');
+// define( 'DB_HOST', 'db');
 
 /** Database Charset to use in creating database tables. */
-define( 'DB_CHARSET', 'utf8');
+// define( 'DB_CHARSET', 'utf8');
 
 /** The Database Collate type. Don't change this if in doubt. */
-define( 'DB_COLLATE', '');
+// define( 'DB_COLLATE', '');
 
 /**#@+
  * Authentication Unique Keys and Salts.
@@ -63,7 +63,7 @@ define( 'NONCE_SALT',       'generateThisPlease');
  * You can have multiple installations in one database if you give each
  * a unique prefix. Only numbers, letters, and underscores please!
  */
-$table_prefix = 'wp_';
+$table_prefix = 'ddstopwp_';
 
 /**
  * For developers: WordPress debugging mode.
@@ -79,8 +79,8 @@ $table_prefix = 'wp_';
  */
 define( 'WP_DEBUG', true);
 
-define('WP_HOME', 'http://localhost:8080');
-define('WP_SITEURL', 'http://localhost:8080');
+define('WP_HOME', 'http://localhost:8000');
+define('WP_SITEURL', 'http://localhost:8000');
 
 
 
