@@ -4,18 +4,6 @@
  * Plugin Name: Mailhog
  */
 
-// add_action( 'phpmailer_init', 'setupMail' );
-// function setupMail( $phpmailer ) {
-//     // if ( ! is_object( $phpmailer ) ) {
-// 	// 	$phpmailer = (object) $phpmailer;
-// 	// }
-//     $phpmailer->Host = 'mailhog';
-//     $phpmailer->Port = 1025;
-//     $phpmailer->IsSMTP();
-//     echo "phmail_init\n";
-//     wp_die();
-// }
-
 // show wp_mail() errors
 add_action( 'wp_mail_failed', 'onMailError', 10, 1 );
 function onMailError( $wp_error ) {
@@ -31,3 +19,12 @@ function wporg_replace_user_mail_from( $from_email ) {
 }
  
 add_filter( 'wp_mail_from', 'wporg_replace_user_mail_from' );
+
+add_action( 'phpmailer_init', 'mailer_config', 10, 1);
+function mailer_config($mailer){
+  $mailer->IsSMTP();
+  $mailer->Host = "mailhog"; // your SMTP server
+  $mailer->Port = 1025;
+//   $mailer->SMTPDebug = 2; // write 0 if you don't want to see client/server communication in page
+  $mailer->CharSet  = "utf-8";
+}
