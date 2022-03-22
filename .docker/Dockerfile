@@ -1,5 +1,5 @@
 # Dockerfile
-FROM php:7.4-apache
+FROM php:7.1-apache
 
 # Droits d'écriture pour www-data
 RUN usermod -u 1000 www-data
@@ -58,7 +58,7 @@ RUN docker-php-ext-configure gd --with-jpeg \
 # RUN chmod 400 /var/www/.ssh/id_rsa
 
 # Les alias
-COPY .bashrc /var/www/.bashrc
-RUN chown www-data:www-data /var/www/.bashrc
+# COPY .bashrc /var/www/.bashrc
+# RUN chown www-data:www-data /var/www/.bashrc
 
 WORKDIR /var/www/app
