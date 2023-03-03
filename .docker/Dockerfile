@@ -45,7 +45,7 @@ RUN a2enmod rewrite
 RUN a2enmod headers
 
 # Mise en forme des erreurs et var_dump()
-RUN pecl install xdebug
+RUN pecl install xdebug-3.0.4
 RUN docker-php-ext-enable xdebug 
 
 # Copie des clés RSA pour autoriser composer à se connecter à Github
@@ -53,13 +53,6 @@ RUN docker-php-ext-enable xdebug
 # RUN chown -R www-data:www-data /var/www/.ssh
 # RUN chmod 400 /var/www/.ssh/id_rsa
 
-# conf pour les mails
-RUN curl -Lsf 'https://storage.googleapis.com/golang/go1.8.3.linux-amd64.tar.gz' | tar -C '/usr/local' -xvzf -
-ENV PATH /usr/local/go/bin:$PATH
-RUN GOPATH=$HOME/go \
-    PATH=$PATH:$GOROOT/bin:$GOPATH/bin \
-    go get github.com/mailhog/mhsendmail
-RUN ln  ~/go/bin/mhsendmail /usr/bin/mhsendmail
 
 # Les alias
 COPY .bashrc /var/www/.bashrc
