@@ -2,6 +2,7 @@
 
 Template de dépôt pour stack php / ReactJs
 
+C'est version est pensée pour Symfony
 
 ## Les configrations disponibles
 
