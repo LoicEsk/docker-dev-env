@@ -1,5 +1,8 @@
 # Mysql
-/data
+.docker/data
+
+# ssh (Important !!)
+.docker/.ssh
 
 # composer
 /vendor
