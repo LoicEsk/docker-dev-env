@@ -1,21 +1,16 @@
 # Docker dev env
 
+Template de dépôt pour stack php / ReactJs
+
+
 ## Les configrations disponibles
 
-Voir le readme de la branche master
+D'autres configurations sont disponible sur les différentes branches
 
 
 ## Utilisation du serveur Docker
 
-1. Copier ses clés RSA dans le scope Docker ``cp -r ~/.ssh/id_rsa .docker/.ssh``
-2. Lancer le serveur : ```docker-compose up``` 
+Installation et déployement pour developement en local
 
-- Lancer le serveur détaché de la console : ```docker-compose up -d```
-- Stopper le serveur en mode détaché : ```docker-compose stop```
-
-- Build ou rebuild des container : ```docker-compose build```
-
-- Executer des commandes php ou composer sur le serveur Docker : 
-    1. Se connecter : ```docker-compose exec php bash``` (le serveur doit être up)
-    2. Lancer la commande voulue
+1. `bash deploy_docker.sh
 
