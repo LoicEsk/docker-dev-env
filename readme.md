@@ -1,11 +1,8 @@
 # Docker dev env
 
-## Les cofigrations disponibles
+## Configuration Wordpress nu
 
-- php 7.2 / apache / mysql
-- php 7.4 / nginx / mysql
-- php 7.4 / apache / mysql
-
+Lancement d'un container WordPress 2 liés : base de données et serveur mail de dev
 
 ## Utilisation du serveur Docker
 

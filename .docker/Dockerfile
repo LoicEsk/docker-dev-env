@@ -1,6 +1,5 @@
-FROM wordpress:php7.4-apache  
+FROM wordpress:apache
 
-COPY ./wp-config.php /var/www/html/wp-config.php
 COPY ./php.ini /usr/local/etc/php/php.ini
 
 RUN apt-get update -qq && \
