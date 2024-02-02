@@ -2,7 +2,7 @@
 
 
 #  Install des packet php
-docker compose run --rm sf composer Install
+docker compose run --rm sf composer install
 
 # Liste des migrations Doctrine
 docker compose rm --rm sf php bin/console doctrine:migrations:list
